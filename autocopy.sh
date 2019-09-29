@@ -1,7 +1,7 @@
 #!/bin/bash
 
-PIDFILE=/Users/tomklaasen/autocopy.pid
-DIR="/Users/tomklaasen/"
+PIDFILE=/home/pi/autocopy.pid
+SOURCE="/media/pi/C709-4E67"
 
 
 if [ -f $PIDFILE ]
@@ -10,14 +10,14 @@ then
   ps -p $PID > /dev/null 2>&1
   if [ $? -eq 0 ]
   then
-    echo "Process already running"
+    # echo "Process already running"
     exit 1
   else
     ## Process not found assume not running
     echo $$ > $PIDFILE
     if [ $? -ne 0 ]
     then
-      echo "Could not create PID file"
+      # echo "Could not create PID file"
       exit 1
     fi
   fi
@@ -25,17 +25,24 @@ else
   echo $$ > $PIDFILE
   if [ $? -ne 0 ]
   then
-    echo "Could not create PID file"
+    # echo "Could not create PID file"
     exit 1
   fi
 fi
 
 
-if [ -d "$DIR" ]; then
-  # Take action if $DIR exists. #
-  echo "Installing config files in ${DIR}..."
+if [ -d "$SOURCE" ]; then
+  # Take action if $SOURCE exists. #
+  # echo "${SOURCE} exists..."
+  if [ "$(ls -A $SOURCE/DCIM/101_VIRB)" ]; then
+    sudo mount -a
+    TARGET="/mnt/backups/virb/virb-export-$(date +%Y%m%d%H%M%S)"
+    mkdir -p "$TARGET/DCIM/101_VIRB/"
+    mkdir -p "$TARGET/GMetrix"
+    mv "$SOURCE/DCIM/101_VIRB"/* "$TARGET/DCIM/101_VIRB/"
+    mv "$SOURCE/GMetrix"/* "$TARGET/GMetrix/"
+  fi
 fi
 
 
-sleep 25d
 rm $PIDFILE
