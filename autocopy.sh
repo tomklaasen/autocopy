@@ -2,6 +2,7 @@
 
 PIDFILE=/home/pi/autocopy.pid
 SOURCE="/media/pi/C709-4E67"
+TARGET_ROOT="/mnt/backups/virb" 
 
 
 if [ -f $PIDFILE ]
@@ -36,7 +37,6 @@ if [ -d "$SOURCE" ]; then
   # echo "${SOURCE} exists..."
   if [ "$(ls -A $SOURCE/DCIM/101_VIRB)" ]; then
     sudo mount -a
-    TARGET_ROOT="/mnt/backups/virb" 
     if [ -d "$TARGET_ROOT" ]; then
       TARGET="$TARGET_ROOT/virb-export-$(date +%Y%m%d%H%M%S)"
       mkdir -p "$TARGET/DCIM/101_VIRB/"
