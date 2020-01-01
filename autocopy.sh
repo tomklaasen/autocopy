@@ -35,13 +35,13 @@ fi
 if [ -d "$SOURCE" ]; then
   # Take action if $SOURCE exists. #
   # echo "${SOURCE} exists..."
-  if [ "$(ls -A $SOURCE/DCIM/101_VIRB)" ]; then
+  if [ "$(ls -A $SOURCE/DCIM/102_VIRB)" ]; then
     sudo mount -a
     if [ -d "$TARGET_ROOT" ]; then
       TARGET="$TARGET_ROOT/virb-export-$(date +%Y%m%d%H%M%S)"
-      mkdir -p "$TARGET/DCIM/101_VIRB/"
+      mkdir -p "$TARGET/DCIM/102_VIRB/"
       mkdir -p "$TARGET/GMetrix"
-      mv "$SOURCE/DCIM/101_VIRB"/* "$TARGET/DCIM/101_VIRB/"
+      mv "$SOURCE/DCIM/102_VIRB"/* "$TARGET/DCIM/102_VIRB/"
       mv "$SOURCE/GMetrix"/* "$TARGET/GMetrix/"
     fi
   fi
