@@ -38,7 +38,7 @@ if [ -d "$SOURCE" ]; then
   if [ "$(ls -A $SOURCE/DCIM/102_VIRB)" ]; then
     sudo mount -a
     if [ -d "$TARGET_ROOT" ]; then
-      TARGET="$TARGET_ROOT/virb-export-$(date +%Y%m%d%H%M%S)"
+      TARGET="$TARGET_ROOT/virb-export"
       mkdir -p "$TARGET/DCIM/102_VIRB/"
       mkdir -p "$TARGET/GMetrix"
       mv "$SOURCE/DCIM/102_VIRB"/* "$TARGET/DCIM/102_VIRB/"
