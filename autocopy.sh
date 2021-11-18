@@ -2,7 +2,7 @@
 
 PIDFILE=/home/pi/autocopy.pid
 SOURCE="/media/pi/C709-4E67"
-TARGET_ROOT="/mnt/backups/virb" 
+TARGET_ROOT="tomklaasen@backupmini.local:/media/usb1/virb" 
 
 
 if [ -f $PIDFILE ]
@@ -36,14 +36,9 @@ if [ -d "$SOURCE" ]; then
   # Take action if $SOURCE exists. #
   # echo "${SOURCE} exists..."
   if [ "$(ls -A $SOURCE/DCIM/102_VIRB)" ]; then
-    sudo mount -a
-    if [ -d "$TARGET_ROOT" ]; then
       TARGET="$TARGET_ROOT/virb-export"
-      mkdir -p "$TARGET/DCIM/102_VIRB/"
-      mkdir -p "$TARGET/GMetrix"
-      mv "$SOURCE/DCIM/102_VIRB"/* "$TARGET/DCIM/102_VIRB/"
-      mv "$SOURCE/GMetrix"/* "$TARGET/GMetrix/"
-    fi
+      rsync -avzh --remove-source-files "$SOURCE/DCIM/102_VIRB/" "$TARGET/DCIM/102_VIRB"
+      rsync -avzh --remove-source-files "$SOURCE/GMetrix/" "$TARGET/GMetrix"
   fi
 fi
 
